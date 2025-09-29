@@ -1,7 +1,7 @@
 conky.config = {
     minimum_height = 720,
     minimum_width = 1240,
-    gap_y = 40,
+    gap_y = 170,
     gap_x = 2,
     alignment = 'middle_middle',
     lua_load = "settings.lua start.lua",

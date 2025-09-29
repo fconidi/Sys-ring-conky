@@ -386,7 +386,23 @@ function upload_total()         return parse(_upload_total) end
 function ssid()                 return parse(_ssid) end
 function wifi_signal()          return parse(_wifi_signal) end              --  value in %
 function local_ip()             return parse(_local_ip) end
+function gw_iface()
+    local handle = io.popen("ip route | grep default | awk '{print $5}' | head -n 1")
+    if not handle then return "N/A" end
+    local result = handle:read("*a")
+    handle:close()
+    return result:gsub("%s+", "") -- rimuove spazi bianchi e newline
+end
+
+function gw_ip()
+    local handle = io.popen("ip route | grep default | awk '{print $3}' | head -n 1")
+    if not handle then return "N/A" end
+    local result = handle:read("*a")
+    handle:close()
+    return result:gsub("%s+", "") -- rimuove spazi bianchi e newline
+end
 function uptime()               return parse("uptime") end                  --  ex: 2d 13h 40m
+
 function uptime_short()         return parse("uptime_short") end            --  ex: 2d 13h
 function time_hrmin()           return parse("time %R") end                 --  ex: 15:40
 function time_hrminsec()        return parse("time %T") end                 --  ex: 15:30:25

@@ -39,7 +39,7 @@ end
 function draw_single_cpu_core(coreN)
     local val = nil
     if coreN.number >= 0 then val = cpu_percent(coreN.number)
-    else val = cpu_temperature_sensors()
+    else val = cpu_temperature() -- Assuming cpu_temperature() returns the value needed
     end
 
     ring_anticlockwise(S.cpu.x, S.cpu.y, coreN.radius, coreN.thickness, coreN.begin_angle, coreN.end_angle, val, coreN.max_value, color_frompercent(tonumber(val)))
@@ -123,17 +123,19 @@ function draw_net()
     write(S.net.total.down.x, S.net.total.down.y, "▼".. download_total(), 12, colors.text)
     write(S.net.total.up.x, S.net.total.up.y, "▲"..upload_total(), 12, colors.text)
 
-    local inf = {}
-    table.insert(inf, "SSID: " .. string.sub(ssid(), 0, 15))
-    table.insert(inf, "Wifi Signal:    " .. wifi_signal() .. "%")
-    table.insert(inf, "Local IP:       " .. local_ip())
-    if use_public_ip then
-        if get_public_ip == nil or (updates()%public_ip_refresh_rate) == 0 then
-            update_public_ip()
-        end
-        table.insert(inf, "Public IP:      " .. get_public_ip())
+local inf = {}
+table.insert(inf, "Interface:      " .. gw_iface())
+table.insert(inf, "SSID:           " .. string.sub(ssid(), 0, 15))
+table.insert(inf, "Wifi Signal:    " .. wifi_signal() .. "%")
+table.insert(inf, "Local IP:       " .. local_ip())
+table.insert(inf, "Gateway:        " .. gw_ip())
+if use_public_ip then
+    if get_public_ip == nil or (updates()%public_ip_refresh_rate) == 0 then
+        update_public_ip()
     end
-    write_line_by_line(S.net.list.x, S.net.list.y, 20, inf, colors.text, 12)
+    table.insert(inf, "Public IP:      " .. get_public_ip())
+end
+write_line_by_line(S.net.x + 180, S.net.y +90, 20, inf, colors.text, 12)
 end
 
 
@@ -142,10 +144,20 @@ function draw_battery()
     if not initialized_battery and tonumber(updates()) > startup_delay + 6  then
         init_battery()
     end
+    
+    -- HO RIDOTTO l'offset Y. Un numero PIÙ PICCOLO mantiene il blocco più in alto.
+    local y_offset = 10 
+    
     local bat = battery_percent()
-    ring_anticlockwise(S.battery.x, S.battery.y, S.battery.radius, S.battery.width , S.battery.begin, S.battery.end_, bat, 100, color_frompercent_reverse(tonumber(bat)))
-    write(S.battery.text.perc.x, S.battery.text.perc.y, bat .. "%", 15, colors.text)
-    write(S.battery.text.title.x, S.battery.text.title.y, "Battery", 15, colors.text)
+    
+    -- Anello
+    ring_anticlockwise(S.battery.x, S.battery.y + y_offset, S.battery.radius, S.battery.width , S.battery.begin, S.battery.end_, bat, 100, color_frompercent_reverse(tonumber(bat)))
+    
+    -- Testo Percentuale
+    write(S.battery.text.perc.x, S.battery.text.perc.y + y_offset, bat .. "%", 15, colors.text)
+    
+    -- Testo Titolo ("Battery") - Ora dovrebbe riapparire
+    write(S.battery.text.title.x, S.battery.text.title.y + y_offset, "Battery", 15, colors.text)
 end
 
 
