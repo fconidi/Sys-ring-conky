@@ -36,7 +36,7 @@ More colors schemes are available. Choose a color from the `settings.lua` file a
 ## Download and Launch Auzia
 
 ```sh
-git clone https://www.gith
+git clone https://github.com/fconidi/Sys-ring-conky.git
 cd auzia-conky
 conky -c conkyrc
 ```
