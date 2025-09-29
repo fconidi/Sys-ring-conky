@@ -1,6 +1,6 @@
-# Auzia-conky
+# Sys-ring-conky
 
-Auzia is a conky theme that displays system resources usage in rings.
+Sys-ring is a conky theme that displays system resources usage in rings.
 
 ## Screenshots
 
@@ -36,12 +36,12 @@ More colors schemes are available. Choose a color from the `settings.lua` file a
 ## Download and Launch Auzia
 
 ```sh
-git clone https://www.github.com/SZinedine/auzia-conky
+git clone https://www.gith
 cd auzia-conky
 conky -c conkyrc
 ```
 
-Edit `settings.lua` to choose your network interface, Internet speed and other settings.
+Edit `settings.lua` to choose your network interface, Internet speed and other settings. If you using SysLinuxOS don't need.
 
 ***
 
