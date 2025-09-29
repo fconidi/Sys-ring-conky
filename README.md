@@ -1,6 +1,6 @@
 # Sys-ring-conky
 
-Sys-ring is a conky theme that displays system resources usage in rings.
+Sys-ring-conky is a conky theme that displays system resources usage in rings.
 
 ## Screenshots
 
@@ -33,7 +33,7 @@ More colors schemes are available. Choose a color from the `settings.lua` file a
 
 ***
 
-## Download and Launch Auzia
+## Download and Launch Sys-ring-concky
 
 ```sh
 git clone https://github.com/fconidi/Sys-ring-conky.git
